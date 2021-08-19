@@ -1,0 +1,38 @@
+name: manage-azure-policy-3a91b7b5
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'initiatives/Enable_Azure_Monitor_for_Virtual_Machine_Scale_Sets_75714362-cae7-409e-9b99-a8e5075b7fad/**'
+#      - 'initiatives/Configure_Azure_Defender_to_be_enabled_on_SQL_Servers_and_SQL_Managed_Instances_9cb3cc7a-b39b-4b82-bc89-e5a5d9ff7b97/**'
+#      - 'initiatives/NIST_SP_800-53_Rev._4_cf25b9c1-bd23-4eb6-bd2c-f4f3ac644a5f/**'
+#      - 'initiatives/New_Zealand_ISM_Restricted_d1a462af-7e6d-4901-98ac-61570b4ed22a/**'
+#      - .github/workflows/manage-azure-policy-3a91b7b5.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_3a91b7b5}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          initiatives/Enable_Azure_Monitor_for_Virtual_Machine_Scale_Sets_75714362-cae7-409e-9b99-a8e5075b7fad/**
+          initiatives/Configure_Azure_Defender_to_be_enabled_on_SQL_Servers_and_SQL_Managed_Instances_9cb3cc7a-b39b-4b82-bc89-e5a5d9ff7b97/**
+          initiatives/NIST_SP_800-53_Rev._4_cf25b9c1-bd23-4eb6-bd2c-f4f3ac644a5f/**
+          initiatives/New_Zealand_ISM_Restricted_d1a462af-7e6d-4901-98ac-61570b4ed22a/**
